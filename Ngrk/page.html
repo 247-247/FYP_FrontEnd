@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Active Requests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+   
+
+   <style type="text/css" >
+   .requester_image {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+    }
+    .dropdown-pull-right {
+  float: right !important;
+  right: 0;
+  left: auto;
+}
+
+.dropdown-pull-right>.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+
+     
+   </style>
+   <script type="text/javascript">
+  
+
+        $(document).ready(function()
+        { 
+            $("#header").load("page2.html");
+
+            $('.dropdown-toggle').dropdown(); 
+
+
+
+
+      
+           // <td><img src='+s[i].owner_image_url+'height=60dp width=60dp  class=img-circle>
+            
+            $.get('http://localhost/Neighbour/public/getAllRequests',function(data){
+             var s = data.request;
+
+            for(var i in s){
+              var d = s[i].s;
+              if(d === 'Accept'){
+            $('#myTable').append('<tr><td><div class=requester_image style=background-image:url('+
+              s[i].owner_image_url+')></div></td>'+
+             '<td>'+s[i].type+'</td>'+
+             '<td>'+s[i].owner_name+'</td>'+
+             '<td>'+s[i].powerMan_name+'</td>'+
+             '<td>'+s[i].created_at+'</td>'+
+             '<td>'+s[i].s+'</td>'+
+             '<td><button onclick=MakeRejectRequest('+s[i].id+')>Reject</<button></td>'+ 
+               //    '<td align="left">'+
+
+               //    '<div class="dropdown dropdown-pull-right">'+
+               //   '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options'+
+               //      '<span class="caret"></span></button>'+
+               //  '<ul class="dropdown-menu">'+
+               // '<li><a href="" onclick=cal('+s[i].PowerMan_id +')>About ServiceTaker</a></li>'+
+               //  '<li><a href="" onclick=cal('+s[i].PowerMan_id +')>About Service Man</a></li>'+
+               //   '<li><a href="#">Reject it</a></li>'+
+               //     '</ul>'+
+               //     '</div>'+
+               //     '</td>'+
+
+
+
+
+
+
+
+
+
+
+             '</tr>');
+          }
+        }
+         });
+
+          
+        //<a href=http://localhost/Neighbour/public/setRejectRequest?id='+s[i].id +'class="btn btn-info" role="button">Link Button</a>     
+
+
+        }); 
+
+         function MakeRejectRequest(i){
+
+          $.post('http://localhost/Neighbour/public/setRejectRequest', {id: i}, function(data, textStatus, xhr) {
+              /*optional stuff to do after success */
+              alert("sucess");
+              window.location.reload(true);
+            });
+            }
+          function cal(i){
+            // window.location.reload("page2.html");
+
+            
+              //  $.session.set("servceMAnId", i);
+          
+            window.location = "Service_man_about.html";
+            //alert("hello");
+
+          }  
+        
+
+
+ 
+    </script>
+</head>
+
+<body>
+  
+  
+  
+  <div class="container" >
+  <div id="header"></div>
+  <div class="table-responsive">
+    <table class="table table-hover" id="myTable">
+  <thead>
+      <tr>
+        <th></th>
+        <th>Request Type</th>
+        <th>Request By</th>
+        <th>Request To</th>
+        <th>Request Date</th>
+        <th>Request Status</th>
+        <th ></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+  </div>
+ 
+
+</div>
+
+
+
+
+<body>
+</html>
